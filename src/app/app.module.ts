@@ -7,6 +7,10 @@ import {BooksComponent} from './components/books/books.component';
 import {SearchComponent} from './components/search/search.component';
 import {NavigationComponent} from './components/navigation/navigation.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {URLInterceptor} from './interceptors/url.interceptor';
+import {ToastrModule} from 'ngx-toastr';
+import {ErrorsInterceptor} from './interceptors/errors.interceptor';
 
 @NgModule({
     declarations: [
@@ -19,8 +23,20 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
         BrowserModule,
         BrowserAnimationsModule,
         AppRoutingModule,
+        ToastrModule.forRoot(),
     ],
-    providers: [],
+    providers: [
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: URLInterceptor,
+            multi: true,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: ErrorsInterceptor,
+            multi: true,
+        },
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
