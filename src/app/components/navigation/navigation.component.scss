@@ -1,0 +1,13 @@
+nav {
+    margin: 20px;
+
+    a {
+        display: inline-block;
+        padding: 0 10px 0;
+        text-decoration: none;
+
+        &.link-active {
+            text-decoration: underline;
+        }
+    }
+}
