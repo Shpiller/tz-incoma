@@ -11,6 +11,9 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {URLInterceptor} from './interceptors/url.interceptor';
 import {ToastrModule} from 'ngx-toastr';
 import {ErrorsInterceptor} from './interceptors/errors.interceptor';
+import {StoreModule} from '@ngrx/store';
+import {AppStore} from './reducers';
+import {StoreRouterConnectingModule} from '@ngrx/router-store';
 
 @NgModule({
     declarations: [
@@ -24,6 +27,14 @@ import {ErrorsInterceptor} from './interceptors/errors.interceptor';
         BrowserAnimationsModule,
         AppRoutingModule,
         ToastrModule.forRoot(),
+        StoreModule.forRoot(AppStore.reducers, {
+            metaReducers: AppStore.metaReducers,
+            runtimeChecks: {
+                strictStateImmutability: true,
+                strictActionImmutability: true
+            }
+        }),
+        StoreRouterConnectingModule.forRoot(),
     ],
     providers: [
         {
