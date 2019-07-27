@@ -26,7 +26,7 @@ export class AppEffects {
                 this.store$.pipe(select(AppStore.Selects.app.query)),
                 this.store$.pipe(select(AppStore.Selects.app.books)),
             ),
-            filter(([data, query, books]) => !books),
+            filter(([data, query, books]) => !books && !!query),
             map(([data, query, books]) => {
                 return new AppActions.GetBooks(query);
             })
