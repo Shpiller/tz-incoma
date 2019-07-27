@@ -1,6 +1,5 @@
 <ng-container *ngIf="loadingApp">
     <div style="display: block; width: 100%; text-align: center; line-height: 100vh">App Loading...</div>
 </ng-container>
-<app-search></app-search>
 <app-navigation></app-navigation>
 <router-outlet (activate)="loadingApp = false"></router-outlet>
