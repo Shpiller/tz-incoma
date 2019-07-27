@@ -1,4 +1,8 @@
 import {ChangeDetectionStrategy, Component, OnChanges, OnInit} from '@angular/core';
+import {BooksInterfaces} from './interfaces/books.interfaces';
+import {Store} from '@ngrx/store';
+import {AppStore} from '../../store/app.store';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-books',
@@ -8,13 +12,22 @@ import {ChangeDetectionStrategy, Component, OnChanges, OnInit} from '@angular/co
 })
 export class BooksComponent implements OnInit, OnChanges {
 
-    constructor() {
+    query$: Observable<string>;
+    books: BooksInterfaces.IVolume[];
+
+    constructor(private store$: Store<AppStore.IState>) {
     }
 
     ngOnInit() {
+
+        this.initStoreData();
     }
 
     ngOnChanges() {
+    }
+
+    private initStoreData() {
+
     }
 
 }

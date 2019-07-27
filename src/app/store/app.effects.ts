@@ -38,6 +38,7 @@ export class AppEffects {
             ofType(AppActionsTypes.GET_BOOKS),
             switchMap((action: AppActions.GetBooks) => {
 
+                // TODO Move to service
                 return this.http.get(
                     `volumes?q=${action.payload}`,
                 ).pipe(

@@ -3,9 +3,6 @@ import {NgModule} from '@angular/core';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {BooksComponent} from './components/books/books.component';
-import {SearchComponent} from './components/search/search.component';
-import {NavigationComponent} from './components/navigation/navigation.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {URLInterceptor} from './interceptors/url.interceptor';
@@ -14,16 +11,15 @@ import {ErrorsInterceptor} from './interceptors/errors.interceptor';
 import {StoreModule} from '@ngrx/store';
 import {AppStore} from './store/app.store';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
-import { EffectsModule } from '@ngrx/effects';
-import { AppEffects } from './store/app.effects';
+import {EffectsModule} from '@ngrx/effects';
+import {AppEffects} from './store/app.effects';
 import {CustomRouterSerializer} from './serializers/custom-route.serializer';
+import {NavigationModule} from './components/navigation/navigation.module';
+import {BooksModule} from './components/books/books.module';
 
 @NgModule({
     declarations: [
         AppComponent,
-        BooksComponent,
-        SearchComponent,
-        NavigationComponent,
     ],
     imports: [
         BrowserModule,
@@ -42,6 +38,8 @@ import {CustomRouterSerializer} from './serializers/custom-route.serializer';
             serializer: CustomRouterSerializer,
         }),
         EffectsModule.forRoot([AppEffects]),
+        NavigationModule,
+        BooksModule,
     ],
     providers: [
         {
