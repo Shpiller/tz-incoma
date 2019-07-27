@@ -1,2 +1,2 @@
-<app-books-search [query]="query$ | async"></app-books-search>
-books
+<app-books-search [query]="query"></app-books-search>
+<p *ngFor="let book of books">{{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}</p>

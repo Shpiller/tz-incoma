@@ -16,6 +16,8 @@ import {AppEffects} from './store/app.effects';
 import {CustomRouterSerializer} from './serializers/custom-route.serializer';
 import {NavigationModule} from './modules/navigation/navigation.module';
 import {BooksModule} from './modules/books/books.module';
+import {environment} from '../environments/environment';
+import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 
 @NgModule({
     declarations: [
@@ -40,6 +42,7 @@ import {BooksModule} from './modules/books/books.module';
         EffectsModule.forRoot([AppEffects]),
         NavigationModule,
         BooksModule,
+        !environment.production ? StoreDevtoolsModule.instrument({maxAge: 50}) : [],
     ],
     providers: [
         {

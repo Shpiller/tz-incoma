@@ -1,8 +1,9 @@
-import {ChangeDetectionStrategy, Component, OnChanges, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {BooksInterfaces} from './interfaces/books.interfaces';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {AppStore} from '../../store/app.store';
-import {Observable} from 'rxjs';
+import {Subscription} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
     selector: 'app-books',
@@ -10,24 +11,50 @@ import {Observable} from 'rxjs';
     styleUrls: ['./books.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BooksComponent implements OnInit, OnChanges {
+export class BooksComponent implements OnInit, OnChanges, OnDestroy {
 
-    query$: Observable<string>;
+    query: string;
     books: BooksInterfaces.IVolume[];
 
-    constructor(private store$: Store<AppStore.IState>) {
+    private subscriptions: Subscription[] = [];
+
+    set subs(sub) {
+        this.subscriptions.push(sub);
+    }
+
+    constructor(private store$: Store<AppStore.IState>,
+                private cdr: ChangeDetectorRef) {
     }
 
     ngOnInit() {
 
-        this.initStoreData();
+        this.initSubscriptions();
     }
 
     ngOnChanges() {
     }
 
-    private initStoreData() {
+    ngOnDestroy() {
+        this.subscriptions.forEach(s => s.unsubscribe());
+    }
 
+    private initSubscriptions() {
+
+        this.subs = this.store$.pipe(
+            select(AppStore.Selects.app.query),
+            map(query => {
+                this.query = query;
+                this.cdr.detectChanges();
+            })
+        ).subscribe();
+
+        this.subs = this.store$.pipe(
+            select(AppStore.Selects.app.books),
+            map(books => {
+                this.books = books;
+                this.cdr.detectChanges();
+            }),
+        ).subscribe();
     }
 
 }
