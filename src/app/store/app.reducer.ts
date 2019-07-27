@@ -25,7 +25,7 @@ export namespace AppReducer {
     }
 
     const initialState: IState = {
-        query: 'angular',
+        query: null,
         books: null,
     };
 
@@ -43,7 +43,7 @@ export namespace AppReducer {
 
             case AppActionsTypes.GET_BOOKS_SUCCESS: {
 
-                const books = (state.books || []).concat(action.payload || []);
+                const books = action.payload ? [...action.payload] : null;
 
                 return {
                     ...state,

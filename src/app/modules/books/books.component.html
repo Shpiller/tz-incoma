@@ -1,2 +1,2 @@
-<app-books-search [query]="query"></app-books-search>
+<app-books-search [query]="query" (search)="searchBooks($event)"></app-books-search>
 <p *ngFor="let book of books">{{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}</p>

@@ -1,1 +1,17 @@
-<p>query: {{query}}</p>
+<form [formGroup]="searchForm" novalidate>
+    <div class="g-column__search-block">
+        <input
+            #inputElement
+            type="text"
+            class="g-search"
+            formControlName="query"
+            placeholder="Поиск..."
+            [maxlength]="maxlength"
+        />
+        <button class="g-column__btn g-column__btn--close"
+                [class.g-column__btn--close-active]="inputElement.value"
+                (click)="clearSearch()">X
+        </button>
+    </div>
+
+</form>

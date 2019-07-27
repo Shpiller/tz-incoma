@@ -4,6 +4,7 @@ import {select, Store} from '@ngrx/store';
 import {AppStore} from '../../store/app.store';
 import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {AppActions} from '../../store/app.actions';
 
 @Component({
     selector: 'app-books',
@@ -55,6 +56,10 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
                 this.cdr.detectChanges();
             }),
         ).subscribe();
+    }
+
+    searchBooks(query: string) {
+        this.store$.dispatch(new AppActions.GetBooks(query));
     }
 
 }
