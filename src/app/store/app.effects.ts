@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
-import {AppActions} from './app.actions';
+import {AppActions, AppActionsTypes} from './app.actions';
 import {catchError, filter, map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 import {EMPTY} from 'rxjs';
@@ -8,6 +8,7 @@ import {ROUTER_NAVIGATED, RouterNavigationAction} from '@ngrx/router-store';
 import {RouterStateUrl} from '../serializers/custom-route.serializer';
 import {AppStore} from './app.store';
 import {select, Store} from '@ngrx/store';
+import {BooksInterfaces} from '../components/books/interfaces/books.interfaces';
 
 @Injectable()
 export class AppEffects {
@@ -21,24 +22,28 @@ export class AppEffects {
             ofType(ROUTER_NAVIGATED),
             map((action: RouterNavigationAction<RouterStateUrl>) => action.payload.routerState.data),
             filter(routerData => !!routerData.loadBooks),
-            withLatestFrom(this.store$.pipe(select(AppStore.Selects.app.books))),
-            filter(([data, books]) => !books),
-            map(() => {
-                return new AppActions.GetBooks();
+            withLatestFrom(
+                this.store$.pipe(select(AppStore.Selects.app.query)),
+                this.store$.pipe(select(AppStore.Selects.app.books)),
+            ),
+            filter(([data, query, books]) => !books),
+            map(([data, query, books]) => {
+                return new AppActions.GetBooks(query);
             })
         )
     );
 
     getList$ = createEffect(() =>
         this.actions$.pipe(
-            ofType(AppActions.Types.GET_BOOKS),
-            switchMap(() => {
+            ofType(AppActionsTypes.GET_BOOKS),
+            switchMap((action: AppActions.GetBooks) => {
 
                 return this.http.get(
-                    'volumes?q=test',
+                    `volumes?q=${action.payload}`,
                 ).pipe(
                     map(books => {
-                        return new AppActions.GetBooksSuccess(books as any[]);
+                        const items = (books as any).items as BooksInterfaces.IVolume[];
+                        return new AppActions.GetBooksSuccess(items);
                     }),
                     catchError(() => EMPTY),
                 );

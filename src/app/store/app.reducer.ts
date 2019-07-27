@@ -1,19 +1,23 @@
-import {AppActions} from './app.actions';
+import {AppActions, AppActionsTypes} from './app.actions';
 import {createSelector} from '@ngrx/store';
+import {BooksInterfaces} from '../components/books/interfaces/books.interfaces';
 
 export namespace AppReducer {
 
     export interface IState {
-        books: any[];
+        query: string;
+        books: BooksInterfaces.IVolume[];
     }
 
     export interface ISelects {
-        books: (state: IState) => any[];
+        query: (state: IState) => string;
+        books: (state: IState) => BooksInterfaces.IVolume[];
     }
 
     export function createStoreSelector(selector) {
 
         class Self implements ISelects {
+            query = createSelector(selector, ((state: IState) => state.query));
             books = createSelector(selector, ((state: IState) => state.books));
         }
 
@@ -21,6 +25,7 @@ export namespace AppReducer {
     }
 
     const initialState: IState = {
+        query: 'angular',
         books: null,
     };
 
@@ -28,7 +33,15 @@ export namespace AppReducer {
 
         switch (action.type) {
 
-            case AppActions.Types.GET_BOOKS_SUCCESS: {
+            case AppActionsTypes.GET_BOOKS: {
+
+                return {
+                    ...state,
+                    query: action.payload,
+                };
+            }
+
+            case AppActionsTypes.GET_BOOKS_SUCCESS: {
 
                 const books = (state.books || []).concat(action.payload || []);
 
