@@ -14,8 +14,8 @@ import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {EffectsModule} from '@ngrx/effects';
 import {AppEffects} from './store/app.effects';
 import {CustomRouterSerializer} from './serializers/custom-route.serializer';
-import {NavigationModule} from './components/navigation/navigation.module';
-import {BooksModule} from './components/books/books.module';
+import {NavigationModule} from './modules/navigation/navigation.module';
+import {BooksModule} from './modules/books/books.module';
 
 @NgModule({
     declarations: [

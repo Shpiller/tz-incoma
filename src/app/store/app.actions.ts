@@ -1,5 +1,5 @@
 import {Action} from '@ngrx/store';
-import {BooksInterfaces} from '../components/books/interfaces/books.interfaces';
+import {BooksInterfaces} from '../modules/books/interfaces/books.interfaces';
 
 export namespace AppActionsTypes {
     export const GET_BOOKS = '[AppActions] GET_BOOKS';

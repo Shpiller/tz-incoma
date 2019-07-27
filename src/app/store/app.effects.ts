@@ -8,7 +8,7 @@ import {ROUTER_NAVIGATED, RouterNavigationAction} from '@ngrx/router-store';
 import {RouterStateUrl} from '../serializers/custom-route.serializer';
 import {AppStore} from './app.store';
 import {select, Store} from '@ngrx/store';
-import {BooksInterfaces} from '../components/books/interfaces/books.interfaces';
+import {BooksInterfaces} from '../modules/books/interfaces/books.interfaces';
 
 @Injectable()
 export class AppEffects {

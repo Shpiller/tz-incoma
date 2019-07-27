@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {BooksComponent} from './books.component';
-import {BooksSearchModule} from './components/books-search/books-search.module';
+import {BooksSearchModule} from './modules/books-search/books-search.module';
 
 
 @NgModule({
