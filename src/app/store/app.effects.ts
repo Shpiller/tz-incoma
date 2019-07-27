@@ -22,8 +22,7 @@ export class AppEffects {
                 return this.booksService.getBooks(query)
                     .pipe(
                         map(books => {
-                            const items = (books as any).items as BooksInterfaces.IVolume[];
-                            return new AppActions.GetBooksSuccess(items);
+                            return new AppActions.GetBooksSuccess(books as BooksInterfaces.IListResponse);
                         }),
                         catchError(() => EMPTY),
                     );

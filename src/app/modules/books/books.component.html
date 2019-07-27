@@ -1,2 +1,9 @@
 <app-books-search [query]="query" (search)="searchBooks($event)"></app-books-search>
-<p *ngFor="let book of books">{{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}</p>
+<ng-container *ngIf="!booksResponse; else results">Начните поиск...</ng-container>
+<ng-template #results>
+    <div *ngIf="!booksResponse.items?.length; else showResults">По Вашему запросу ничего не найдено</div>
+</ng-template>
+<ng-template #showResults>
+    <div>Найдено всего: {{booksResponse.totalItems}}</div>
+    <p *ngFor="let book of booksResponse.items">{{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}</p>
+</ng-template>

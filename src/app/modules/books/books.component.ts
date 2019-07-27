@@ -15,7 +15,7 @@ import {AppActions} from '../../store/app.actions';
 export class BooksComponent implements OnInit, OnChanges, OnDestroy {
 
     query: string;
-    books: BooksInterfaces.IVolume[];
+    booksResponse: BooksInterfaces.IListResponse;
 
     private subscriptions: Subscription[] = [];
 
@@ -50,9 +50,9 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
         ).subscribe();
 
         this.subs = this.store$.pipe(
-            select(AppStore.Selects.app.books),
+            select(AppStore.Selects.app.booksResponse),
             map(books => {
-                this.books = books;
+                this.booksResponse = books;
                 this.cdr.detectChanges();
             }),
         ).subscribe();

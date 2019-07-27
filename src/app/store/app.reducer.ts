@@ -6,19 +6,19 @@ export namespace AppReducer {
 
     export interface IState {
         query: string;
-        books: BooksInterfaces.IVolume[];
+        booksResponse: BooksInterfaces.IListResponse;
     }
 
     export interface ISelects {
         query: (state: IState) => string;
-        books: (state: IState) => BooksInterfaces.IVolume[];
+        booksResponse: (state: IState) => BooksInterfaces.IListResponse;
     }
 
     export function createStoreSelector(selector) {
 
         class Self implements ISelects {
             query = createSelector(selector, ((state: IState) => state.query));
-            books = createSelector(selector, ((state: IState) => state.books));
+            booksResponse = createSelector(selector, ((state: IState) => state.booksResponse));
         }
 
         return new Self();
@@ -26,7 +26,7 @@ export namespace AppReducer {
 
     const initialState: IState = {
         query: null,
-        books: null,
+        booksResponse: null,
     };
 
     export function reducer(state = initialState, action: AppActions.All): IState {
@@ -43,11 +43,11 @@ export namespace AppReducer {
 
             case AppActionsTypes.GET_BOOKS_SUCCESS: {
 
-                const books = action.payload ? [...action.payload] : null;
+                const booksResponse = action.payload ? {...action.payload} : null;
 
                 return {
                     ...state,
-                    books,
+                    booksResponse,
                 };
             }
 
