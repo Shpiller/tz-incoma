@@ -18,6 +18,7 @@ import {BooksModule} from './modules/books/books.module';
 import {environment} from '../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {FavouritesModule} from './modules/favourites/favourites.module';
+import {WINDOW_PROVIDERS} from './providers/window.providers';
 
 @NgModule({
     declarations: [
@@ -56,6 +57,7 @@ import {FavouritesModule} from './modules/favourites/favourites.module';
             useClass: ErrorsInterceptor,
             multi: true,
         },
+        WINDOW_PROVIDERS,
     ],
     bootstrap: [AppComponent]
 })

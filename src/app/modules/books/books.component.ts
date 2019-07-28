@@ -1,11 +1,20 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
+import {
+    ChangeDetectionStrategy,
+    ChangeDetectorRef,
+    Component,
+    Inject,
+    OnChanges,
+    OnDestroy,
+    OnInit
+} from '@angular/core';
 import {BooksInterfaces} from './interfaces/books.interfaces';
 import {select, Store} from '@ngrx/store';
-import {Subscription} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {fromEvent, Subscription} from 'rxjs';
+import {debounceTime, filter, map} from 'rxjs/operators';
 import {CommonInterfaces} from '../../interfaces/common.interfaces';
 import {BooksActions} from './store/books.actions';
 import {BooksStore} from './store/books.store';
+import {WINDOW} from '../../providers/window.providers';
 
 @Component({
     selector: 'app-books',
@@ -25,12 +34,9 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
         this.subscriptions.push(sub);
     }
 
-    get SERVICE_LOADING() {
-        return BooksStore.SERVICE_LOADING;
-    }
-
     constructor(private store$: Store<BooksStore.IState>,
-                private cdr: ChangeDetectorRef) {
+                private cdr: ChangeDetectorRef,
+                @Inject(WINDOW) private window: Window) {
     }
 
     ngOnInit() {
@@ -70,6 +76,19 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
                 this.cdr.detectChanges();
             }),
         ).subscribe();
+
+        // TODO Down scroll
+        this.subs = fromEvent(this.window, 'scroll')
+            .pipe(
+                debounceTime(300),
+                filter(() => {
+                    return !this.getBooksLoading() && !this.getNextBooksPageLoading()
+                        && this.booksResponse && this.booksResponse.totalItems > this.booksResponse.items.length;
+                }),
+                map(() => {
+                    this.store$.dispatch(new BooksActions.GetNextBooksPage());
+                }),
+            ).subscribe();
     }
 
     searchBooks(query: string) {
@@ -78,6 +97,14 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
 
     getNextPage() {
         this.store$.dispatch(new BooksActions.GetNextBooksPage());
+    }
+
+    getBooksLoading() {
+        return this.serviceLoading && this.serviceLoading[BooksStore.SERVICE_LOADING.GET_BOOKS];
+    }
+
+    getNextBooksPageLoading() {
+        return this.serviceLoading && this.serviceLoading[BooksStore.SERVICE_LOADING.GET_NEXT_BOOKS_PAGE];
     }
 
 }

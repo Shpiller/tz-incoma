@@ -1,6 +1,6 @@
 <app-books-search [query]="query" (search)="searchBooks($event)"></app-books-search>
 
-<div *ngIf="serviceLoading && serviceLoading[SERVICE_LOADING.GET_BOOKS]; else showResults">Выполняется поиск...</div>
+<div *ngIf="getBooksLoading(); else showResults">Выполняется поиск...</div>
 
 <ng-template #showResults>
 
@@ -19,7 +19,7 @@
 
         <div *ngIf="booksResponse.totalItems > booksResponse.items.length">
 
-            <div *ngIf="serviceLoading && serviceLoading[SERVICE_LOADING.GET_NEXT_BOOKS_PAGE]; else getNextPageButton">
+            <div *ngIf="getNextBooksPageLoading(); else getNextPageButton">
                 Подгрузка результатов...
             </div>
 
