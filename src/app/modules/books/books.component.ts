@@ -15,6 +15,7 @@ import {CommonInterfaces} from '../../interfaces/common.interfaces';
 import {BooksActions} from './store/books.actions';
 import {BooksStore} from './store/books.store';
 import {WINDOW} from '../../providers/window.providers';
+import {DOCUMENT} from '@angular/common';
 
 @Component({
     selector: 'app-books',
@@ -36,6 +37,7 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
 
     constructor(private store$: Store<BooksStore.IState>,
                 private cdr: ChangeDetectorRef,
+                @Inject(DOCUMENT) private document: Document,
                 @Inject(WINDOW) private window: Window) {
     }
 
@@ -77,12 +79,16 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
             }),
         ).subscribe();
 
-        // TODO Down scroll
-        this.subs = fromEvent(this.window, 'scroll')
+        this.subs = fromEvent(this.window, 'mousewheel')
             .pipe(
+                map((e: any) => e.wheelDelta),
                 debounceTime(300),
-                filter(() => {
-                    return !this.getBooksLoading() && !this.getNextBooksPageLoading()
+                filter(wheelDelta => {
+
+                    const heightToEnd = this.document.body.clientHeight - this.window.innerHeight - this.window.pageYOffset;
+
+                    return wheelDelta < 0 && heightToEnd <= 0
+                        && !this.getBooksLoading() && !this.getNextBooksPageLoading()
                         && this.booksResponse && this.booksResponse.totalItems > this.booksResponse.items.length;
                 }),
                 map(() => {
