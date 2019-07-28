@@ -6,6 +6,7 @@ export namespace BooksInterfaces {
     }
 
     export interface IVolume {
+        id: string;
         volumeInfo: {
             title: string;
             subtitle: string;

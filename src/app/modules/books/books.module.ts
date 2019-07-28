@@ -6,6 +6,7 @@ import {BooksStore} from './store/books.store';
 import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {BooksEffects} from './store/books.effects';
+import {BookCardModule} from '../book-card/book-card.module';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import {BooksEffects} from './store/books.effects';
         EffectsModule.forFeature([
             BooksEffects,
         ]),
+        BookCardModule,
     ]
 })
 export class BooksModule {

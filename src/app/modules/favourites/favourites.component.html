@@ -1,1 +1,5 @@
-<p>favourites works!</p>
+<div *ngFor="let book of favourites; let i = index;">
+    <app-book-card
+        [index]="i" [book]="book" [isFavourite]="true"
+        (toggleFavourites)="removeFromFavourites(book.id)"></app-book-card>
+</div>

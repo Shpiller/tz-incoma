@@ -121,8 +121,5 @@
             }
         }
     },
-    "defaultProject": "tz-incoma",
-    "cli": {
-        "defaultCollection": "schema-store"
-    }
+    "defaultProject": "tz-incoma"
 }

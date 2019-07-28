@@ -13,7 +13,10 @@
         <ng-template #showItems>
             <div>Найдено всего: {{booksResponse.totalItems}}</div>
             <div *ngFor="let book of booksResponse.items; let i = index;">
-                {{i + 1}}. {{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}
+                <app-book-card
+                    [index]="i" [book]="book"
+                    [isFavourite]="!!favouritesMap[book.id]"
+                    (toggleFavourites)="toggleFavourites(book)"></app-book-card>
             </div>
         </ng-template>
 

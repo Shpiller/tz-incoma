@@ -16,6 +16,7 @@ import {BooksActions} from './store/books.actions';
 import {BooksStore} from './store/books.store';
 import {WINDOW} from '../../providers/window.providers';
 import {DOCUMENT} from '@angular/common';
+import {FavouritesService} from '../../services/favourites/favourites.service';
 
 @Component({
     selector: 'app-books',
@@ -28,6 +29,7 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     query: string;
     booksResponse: BooksInterfaces.IListResponse;
     serviceLoading: CommonInterfaces.IMapOfBoolean;
+    favouritesMap: { [id: string]: BooksInterfaces.IVolume };
 
     private subscriptions: Subscription[] = [];
 
@@ -38,11 +40,12 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     constructor(private store$: Store<BooksStore.IState>,
                 private cdr: ChangeDetectorRef,
                 @Inject(DOCUMENT) private document: Document,
-                @Inject(WINDOW) private window: Window) {
+                @Inject(WINDOW) private window: Window,
+                private favouritesService: FavouritesService) {
     }
 
     ngOnInit() {
-
+        this.favouritesMap = this.favouritesService.favouritesMap;
         this.initSubscriptions();
     }
 
@@ -111,6 +114,10 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
 
     getNextBooksPageLoading() {
         return this.serviceLoading && this.serviceLoading[BooksStore.SERVICE_LOADING.GET_NEXT_BOOKS_PAGE];
+    }
+
+    toggleFavourites(book: BooksInterfaces.IVolume) {
+        this.favouritesService.toggleFavourites(book);
     }
 
 }

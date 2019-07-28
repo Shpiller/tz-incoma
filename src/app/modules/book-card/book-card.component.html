@@ -1,0 +1,8 @@
+<div (click)="toggleFavourites.emit()">
+    <span *ngIf="isFavourite; else no">+</span>
+    <ng-template #no>
+        <span>-</span>
+    </ng-template>
+</div>
+<span> {{index + 1}}. {{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}</span>
+
