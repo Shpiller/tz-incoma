@@ -12,7 +12,6 @@ import {StoreModule} from '@ngrx/store';
 import {AppStore} from './store/app.store';
 import {StoreRouterConnectingModule} from '@ngrx/router-store';
 import {EffectsModule} from '@ngrx/effects';
-import {AppEffects} from './store/app.effects';
 import {CustomRouterSerializer} from './serializers/custom-route.serializer';
 import {NavigationModule} from './modules/navigation/navigation.module';
 import {BooksModule} from './modules/books/books.module';
@@ -40,7 +39,7 @@ import {FavouritesModule} from './modules/favourites/favourites.module';
         StoreRouterConnectingModule.forRoot({
             serializer: CustomRouterSerializer,
         }),
-        EffectsModule.forRoot([AppEffects]),
+        EffectsModule.forRoot([]),
         NavigationModule,
         BooksModule,
         FavouritesModule,

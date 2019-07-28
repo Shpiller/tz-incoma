@@ -1,31 +1,14 @@
-import {AppActions, AppActionsTypes} from './app.actions';
-import {createSelector} from '@ngrx/store';
-import {BooksInterfaces} from '../modules/books/interfaces/books.interfaces';
-import {CommonInterfaces} from '../interfaces/common.interfaces';
+import {createSelector, MemoizedSelector} from '@ngrx/store';
+import {BooksActions, BooksActionTypes} from './books.actions';
+import {BooksInterfaces} from '../interfaces/books.interfaces';
+import {CommonInterfaces} from '../../../interfaces/common.interfaces';
 
-export namespace AppReducer {
+export namespace BooksReducer {
 
     export interface IState {
         query: string;
         booksResponse: BooksInterfaces.IListResponse;
         serviceLoading: CommonInterfaces.IMapOfBoolean;
-    }
-
-    export interface ISelects {
-        query: (state: IState) => string;
-        booksResponse: (state: IState) => BooksInterfaces.IListResponse;
-        serviceLoading: (state: IState) => CommonInterfaces.IMapOfBoolean;
-    }
-
-    export function createStoreSelector(selector) {
-
-        class Self implements ISelects {
-            query = createSelector(selector, ((state: IState) => state.query));
-            booksResponse = createSelector(selector, ((state: IState) => state.booksResponse));
-            serviceLoading = createSelector(selector, ((state: IState) => state.serviceLoading));
-        }
-
-        return new Self();
     }
 
     const initialState: IState = {
@@ -34,11 +17,28 @@ export namespace AppReducer {
         serviceLoading: null,
     };
 
-    export function reducer(state = initialState, action: AppActions.All): IState {
+    export interface ISelects {
+        query: (state: IState) => string;
+        booksResponse: (state: IState) => BooksInterfaces.IListResponse;
+        serviceLoading: (state: IState) => CommonInterfaces.IMapOfBoolean;
+    }
+
+    export function createStoreSelector(selector: MemoizedSelector<object, IState>) {
+
+        class Selects implements ISelects {
+            query = createSelector(selector, ((state: IState) => state.query));
+            booksResponse = createSelector(selector, ((state: IState) => state.booksResponse));
+            serviceLoading = createSelector(selector, ((state: IState) => state.serviceLoading));
+        }
+
+        return new Selects();
+    }
+
+    export function reducer(state: IState = {...initialState}, action: BooksActions.All): IState {
 
         switch (action.type) {
 
-            case AppActionsTypes.PATCH_SERVICE_LOADING: {
+            case BooksActionTypes.PATCH_SERVICE_LOADING: {
 
                 const serviceLoading = {
                     ...state.serviceLoading,
@@ -51,7 +51,7 @@ export namespace AppReducer {
                 };
             }
 
-            case AppActionsTypes.GET_BOOKS: {
+            case BooksActionTypes.GET_BOOKS: {
 
                 return {
                     ...state,
@@ -59,7 +59,7 @@ export namespace AppReducer {
                 };
             }
 
-            case AppActionsTypes.GET_BOOKS_SUCCESS: {
+            case BooksActionTypes.GET_BOOKS_SUCCESS: {
 
                 const booksResponse = action.payload ? {...action.payload} : null;
 
@@ -69,9 +69,8 @@ export namespace AppReducer {
                 };
             }
 
-            default: {
+            default:
                 return state;
-            }
         }
     }
 }

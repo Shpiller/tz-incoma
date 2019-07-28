@@ -1,11 +1,11 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import {BooksInterfaces} from './interfaces/books.interfaces';
 import {select, Store} from '@ngrx/store';
-import {AppStore} from '../../store/app.store';
 import {Subscription} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {AppActions} from '../../store/app.actions';
 import {CommonInterfaces} from '../../interfaces/common.interfaces';
+import {BooksActions} from './store/books.actions';
+import {BooksStore} from './store/books.store';
 
 @Component({
     selector: 'app-books',
@@ -26,10 +26,10 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     get SERVICE_LOADING() {
-        return AppStore.SERVICE_LOADING;
+        return BooksStore.SERVICE_LOADING;
     }
 
-    constructor(private store$: Store<AppStore.IState>,
+    constructor(private store$: Store<BooksStore.IState>,
                 private cdr: ChangeDetectorRef) {
     }
 
@@ -48,7 +48,7 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     private initSubscriptions() {
 
         this.subs = this.store$.pipe(
-            select(AppStore.Selects.app.query),
+            select(BooksStore.Selects.self.query),
             map(query => {
                 this.query = query;
                 this.cdr.detectChanges();
@@ -56,7 +56,7 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
         ).subscribe();
 
         this.subs = this.store$.pipe(
-            select(AppStore.Selects.app.booksResponse),
+            select(BooksStore.Selects.self.booksResponse),
             map(books => {
                 this.booksResponse = books;
                 this.cdr.detectChanges();
@@ -64,7 +64,7 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
         ).subscribe();
 
         this.subs = this.store$.pipe(
-            select(AppStore.Selects.app.serviceLoading),
+            select(BooksStore.Selects.self.serviceLoading),
             map(serviceLoading => {
                 this.serviceLoading = serviceLoading;
                 this.cdr.detectChanges();
@@ -73,11 +73,11 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     searchBooks(query: string) {
-        this.store$.dispatch(new AppActions.GetBooks(query));
+        this.store$.dispatch(new BooksActions.GetBooks(query));
     }
 
     getNextPage() {
-        this.store$.dispatch(new AppActions.GetNextBooksPage());
+        this.store$.dispatch(new BooksActions.GetNextBooksPage());
     }
 
 }
