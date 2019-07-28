@@ -1,24 +1,32 @@
 <app-books-search [query]="query" (search)="searchBooks($event)"></app-books-search>
-<ng-container *ngIf="serviceLoading && serviceLoading[SERVICE_LOADING.GET_BOOKS]; else showResults">
-    <div>Выполняется поиск...</div>
-</ng-container>
+
+<div *ngIf="serviceLoading && serviceLoading[SERVICE_LOADING.GET_BOOKS]; else showResults">Выполняется поиск...</div>
+
 <ng-template #showResults>
-    <ng-container *ngIf="!booksResponse; else results">Начните поиск...</ng-container>
+
+    <div *ngIf="!booksResponse; else results">Начните поиск...</div>
+
     <ng-template #results>
+
         <div *ngIf="!booksResponse.items?.length; else showItems">По Вашему запросу ничего не найдено</div>
+
         <ng-template #showItems>
             <div>Найдено всего: {{booksResponse.totalItems}}</div>
             <div *ngFor="let book of booksResponse.items; let i = index;">
                 {{i + 1}}. {{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}
             </div>
         </ng-template>
+
         <div *ngIf="booksResponse.totalItems > booksResponse.items.length">
+
             <div *ngIf="serviceLoading && serviceLoading[SERVICE_LOADING.GET_NEXT_BOOKS_PAGE]; else getNextPageButton">
                 Подгрузка результатов...
             </div>
+
             <ng-template #getNextPageButton>
                 <button (click)="getNextPage()">Загрузить ещё результаты</button>
             </ng-template>
+
         </div>
     </ng-template>
 </ng-template>
