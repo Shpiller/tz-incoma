@@ -69,6 +69,14 @@ export namespace BooksReducer {
                 };
             }
 
+            case BooksActionTypes.GET_BOOKS_FAILED: {
+
+                return {
+                    ...state,
+                    booksResponse: null,
+                };
+            }
+
             default:
                 return state;
         }
