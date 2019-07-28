@@ -76,4 +76,8 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
         this.store$.dispatch(new AppActions.GetBooks(query));
     }
 
+    getNextPage() {
+        this.store$.dispatch(new AppActions.GetNextBooksPage());
+    }
+
 }

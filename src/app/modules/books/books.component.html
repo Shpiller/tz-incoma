@@ -8,7 +8,12 @@
         <div *ngIf="!booksResponse.items?.length; else showItems">По Вашему запросу ничего не найдено</div>
         <ng-template #showItems>
             <div>Найдено всего: {{booksResponse.totalItems}}</div>
-            <p *ngFor="let book of booksResponse.items">{{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}</p>
+            <div *ngFor="let book of booksResponse.items; let i = index;">
+                {{i + 1}}. {{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}
+            </div>
         </ng-template>
+        <div *ngIf="booksResponse.totalItems > booksResponse.items.length">
+            <button (click)="getNextPage()">Загрузить ещё результаты</button>
+        </div>
     </ng-template>
 </ng-template>
