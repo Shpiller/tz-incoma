@@ -1,13 +1,23 @@
-<nav>
-    <a
-        routerLink="/"
-        routerLinkActive="link-active"
-        [routerLinkActiveOptions]="{ exact: true }">
-        Поиск книг
-    </a>
-    <a
-        routerLink="/favourites"
-        routerLinkActive="link-active">
-        Избранное - {{countFavourites}}
-    </a>
-</nav>
+<div class="container">
+    <div class="tabs is-centered is-large">
+        <ul>
+            <li
+                routerLink="/"
+                routerLinkActive="is-active"
+                [routerLinkActiveOptions]="{ exact: true }">
+                <a>
+                    <span class="icon is-small"><fa-icon [icon]="faSearch"></fa-icon></span>
+                    <span>Поиск книг</span>
+                </a>
+            </li>
+            <li
+                routerLink="/favourites"
+                routerLinkActive="is-active">
+                <a>
+                    <span class="icon is-small"><fa-icon [icon]="faHeart"></fa-icon></span>
+                    <span>Избранное / {{countFavourites}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
