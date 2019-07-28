@@ -18,6 +18,7 @@ import {NavigationModule} from './modules/navigation/navigation.module';
 import {BooksModule} from './modules/books/books.module';
 import {environment} from '../environments/environment';
 import {StoreDevtoolsModule} from '@ngrx/store-devtools';
+import {FavouritesModule} from './modules/favourites/favourites.module';
 
 @NgModule({
     declarations: [
@@ -42,6 +43,7 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
         EffectsModule.forRoot([AppEffects]),
         NavigationModule,
         BooksModule,
+        FavouritesModule,
         !environment.production ? StoreDevtoolsModule.instrument({maxAge: 50}) : [],
     ],
     providers: [

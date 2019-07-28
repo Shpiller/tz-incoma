@@ -1,19 +1,17 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {BooksComponent} from './modules/books/books.component';
+import {FavouritesComponent} from './modules/favourites/favourites.component';
 
 
 const routes: Routes = [
     {
         path: '',
         component: BooksComponent,
-        data: {
-            loadBooks: true,
-        }
     },
     {
         path: 'favourites',
-        loadChildren: () => import('./modules/favourites/favourites.module').then(m => m.FavouritesModule),
+        component: FavouritesComponent,
     },
     {
         path: '**',
