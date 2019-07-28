@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {catchError, concatMap, filter, map, switchMap, withLatestFrom} from 'rxjs/operators';
-import {BooksService} from '../../../services/books/books.service';
+import {BooksService} from '../services/books.service';
 import {BooksActions, BooksActionTypes} from './books.actions';
 import {of} from 'rxjs';
 import {CommonInterfaces} from '../../../interfaces/common.interfaces';
