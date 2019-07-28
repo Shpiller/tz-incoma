@@ -1,3 +1,14 @@
 :focus {
     outline: none;
 }
+
+.tabs ul {
+    flex-shrink: 1;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 740px) {
+    .tabs ul li {
+        width: 100%;
+    }
+}
