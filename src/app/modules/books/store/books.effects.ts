@@ -45,6 +45,7 @@ export class BooksEffects {
 
                 const flags: CommonInterfaces.IMapOfBoolean = {};
                 flags[BooksStore.SERVICE_LOADING.GET_BOOKS] = action.type === BooksActionTypes.GET_BOOKS;
+                flags[BooksStore.SERVICE_LOADING.GET_NEXT_BOOKS_PAGE] = false;
 
                 return new BooksActions.PatchServiceLoading(flags);
             }),
@@ -64,9 +65,11 @@ export class BooksEffects {
                 return this.booksService.getBooks(query, booksResponse.items.length)
                     .pipe(
                         withLatestFrom(
-                            this.store$.pipe(select(BooksStore.Selects.self.serviceLoading)),
+                            this.store$.pipe(select(BooksStore.Selects.self.serviceLoading))
                         ),
-                        filter(([books, serviceLoading]) => !serviceLoading[BooksStore.SERVICE_LOADING.GET_BOOKS]),
+                        filter(([books, serviceLoading]) => {
+                            return serviceLoading[BooksStore.SERVICE_LOADING.GET_NEXT_BOOKS_PAGE];
+                        }),
                         map(([books]) => {
                             return new BooksActions.GetNextBooksPageSuccess((books as BooksInterfaces.IListResponse).items);
                         }),
