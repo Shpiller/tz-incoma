@@ -13,7 +13,12 @@
             </div>
         </ng-template>
         <div *ngIf="booksResponse.totalItems > booksResponse.items.length">
-            <button (click)="getNextPage()">Загрузить ещё результаты</button>
+            <div *ngIf="serviceLoading && serviceLoading[SERVICE_LOADING.GET_NEXT_BOOKS_PAGE]; else getNextPageButton">
+                Подгрузка результатов...
+            </div>
+            <ng-template #getNextPageButton>
+                <button (click)="getNextPage()">Загрузить ещё результаты</button>
+            </ng-template>
         </div>
     </ng-template>
 </ng-template>

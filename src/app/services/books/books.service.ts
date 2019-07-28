@@ -9,7 +9,7 @@ export class BooksService {
     constructor(private http: HttpClient) {
     }
 
-    getBooks(query: string) {
-        return this.http.get(`volumes?q=${query}`);
+    getBooks(query: string, startIndex: number = 0) {
+        return this.http.get(`volumes?q=${query}&startIndex=${startIndex}`);
     }
 }

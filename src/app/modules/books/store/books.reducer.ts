@@ -14,7 +14,7 @@ export namespace BooksReducer {
     const initialState: IState = {
         query: null,
         booksResponse: null,
-        serviceLoading: null,
+        serviceLoading: {},
     };
 
     export interface ISelects {
@@ -74,6 +74,19 @@ export namespace BooksReducer {
                 return {
                     ...state,
                     booksResponse: null,
+                };
+            }
+
+            case BooksActionTypes.GET_NEXT_BOOKS_PAGE_SUCCESS: {
+
+                const items = state.booksResponse.items.concat(action.payload);
+
+                return {
+                    ...state,
+                    booksResponse: {
+                        ...state.booksResponse,
+                        items,
+                    },
                 };
             }
 
