@@ -5,6 +5,11 @@ import {AppReducer} from './app.reducer';
 
 export namespace AppStore {
 
+    export const SERVICE_LOADING = {
+        GET_BOOKS: '[AppStore][SERVICE_LOADING] GET_BOOKS',
+        GET_NEXT_BOOKS_PAGE: '[AppStore][SERVICE_LOADING] GET_NEXT_BOOKS_PAGE',
+    };
+
     export interface IState {
         router: RouterReducerState;
         app: AppReducer.IState;
