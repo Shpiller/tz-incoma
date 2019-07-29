@@ -6,7 +6,7 @@
     </app-books-search>
 </div>
 
-<div class="container container-status">
+<div class="container status">
     <div class="notification is-medium">
         <span *ngIf="getBooksLoading(); else statusShowResults">Выполняется поиск...</span>
         <ng-template #statusShowResults>
@@ -27,12 +27,12 @@
 
     <div class="container" *ngFor="let book of booksResponse.items; let i = index;">
         <app-book-card
-            [index]="i" [book]="book"
+            [book]="book"
             [isFavourite]="!!favouritesMap[book.id]"
             (toggleFavourites)="toggleFavourites(book)"></app-book-card>
     </div>
 
-    <div class="container" *ngIf="booksResponse.totalItems > booksResponse.items.length">
+    <div class="container next-page" *ngIf="booksResponse.totalItems > booksResponse.items.length">
         <div class="notification has-text-centered" *ngIf="getNextBooksPageLoading(); else getNextPageButton">
             <span class="is-medium">Загружаем результаты...</span>
         </div>

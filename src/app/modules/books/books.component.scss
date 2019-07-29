@@ -1,3 +1,10 @@
-.container-status {
-    margin-top: 20px;
+.container{
+    &.status {
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+
+    &.next-page {
+        margin-top: 20px;
+    }
 }

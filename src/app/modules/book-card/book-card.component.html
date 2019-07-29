@@ -1,8 +1,29 @@
-<div (click)="toggleFavourites.emit()">
-    <span *ngIf="isFavourite; else no">+</span>
-    <ng-template #no>
-        <span>-</span>
-    </ng-template>
+<div class="card">
+    <div class="card-content">
+        <div class="media">
+            <div
+                class="media-left favourites-toggle"
+                (click)="toggleFavourites.emit()"
+                [class.has-text-link]="isFavourite"
+                [class.has-text-grey-light]="!isFavourite">
+                <span class="icon is-small"><fa-icon [icon]="faHeart"></fa-icon></span>
+            </div>
+            <div class="media-content">
+                <p class="title is-4">{{book.volumeInfo.title}}</p>
+                <p class="subtitle is-6">{{book.volumeInfo.subtitle}}</p>
+            </div>
+        </div>
+        <div class="content">
+
+        </div>
+    </div>
 </div>
-<span> {{index + 1}}. {{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}</span>
+
+<!--<div class="container" (click)="toggleFavourites.emit()">-->
+<!--    <span *ngIf="isFavourite; else no">+</span>-->
+<!--    <ng-template #no>-->
+<!--        <span>-</span>-->
+<!--    </ng-template>-->
+<!--</div>-->
+<!--<span> {{book.volumeInfo.title}}. {{book.volumeInfo.subtitle}}</span>-->
 

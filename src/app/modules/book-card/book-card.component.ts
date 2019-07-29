@@ -1,5 +1,6 @@
 import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {BooksInterfaces} from '../books/interfaces/books.interfaces';
+import {faHeart} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-book-card',
@@ -9,9 +10,10 @@ import {BooksInterfaces} from '../books/interfaces/books.interfaces';
 })
 export class BookCardComponent implements OnInit {
 
-    @Input() index: number;
     @Input() book: BooksInterfaces.IVolume;
     @Input() isFavourite: boolean;
+
+    faHeart = faHeart;
 
     @Output() toggleFavourites: EventEmitter<void> = new EventEmitter();
 
