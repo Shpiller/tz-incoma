@@ -1,8 +1,10 @@
-<app-books-search
-    [query]="query"
-    [searchLoading]="getBooksLoading()"
-    (search)="searchBooks($event)">
-</app-books-search>
+<div class="container">
+    <app-books-search
+        [query]="query"
+        [searchLoading]="getBooksLoading()"
+        (search)="searchBooks($event)">
+    </app-books-search>
+</div>
 
 <div class="container container-status">
     <div class="notification is-medium">
