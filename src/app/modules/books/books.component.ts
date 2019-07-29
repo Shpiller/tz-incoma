@@ -17,6 +17,7 @@ import {BooksStore} from './store/books.store';
 import {WINDOW} from '../../providers/window.providers';
 import {DOCUMENT} from '@angular/common';
 import {FavouritesService} from '../../services/favourites/favourites.service';
+import {faSpinner} from '@fortawesome/free-solid-svg-icons/faSpinner';
 
 @Component({
     selector: 'app-books',
@@ -30,6 +31,8 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     booksResponse: BooksInterfaces.IListResponse;
     serviceLoading: CommonInterfaces.IMapOfBoolean;
     favouritesMap: { [id: string]: BooksInterfaces.IVolume };
+
+    faSpinner = faSpinner;
 
     private subscriptions: Subscription[] = [];
 

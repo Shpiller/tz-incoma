@@ -4,36 +4,40 @@
     (search)="searchBooks($event)">
 </app-books-search>
 
-<div *ngIf="getBooksLoading(); else showResults">Выполняется поиск...</div>
-
-<ng-template #showResults>
-
-    <div *ngIf="!booksResponse; else results">Начните поиск...</div>
-
-    <ng-template #results>
-
-        <div *ngIf="!booksResponse.items?.length; else showItems">По Вашему запросу ничего не найдено</div>
-
-        <ng-template #showItems>
-            <div>Найдено всего: {{booksResponse.totalItems}}</div>
-            <div *ngFor="let book of booksResponse.items; let i = index;">
-                <app-book-card
-                    [index]="i" [book]="book"
-                    [isFavourite]="!!favouritesMap[book.id]"
-                    (toggleFavourites)="toggleFavourites(book)"></app-book-card>
-            </div>
+<div class="container container-status">
+    <div class="notification is-medium">
+        <span *ngIf="getBooksLoading(); else statusShowResults">Выполняется поиск...</span>
+        <ng-template #statusShowResults>
+            <span *ngIf="!booksResponse; else statusResults">Начните поиск...</span>
         </ng-template>
+        <ng-template #statusResults>
+            <span *ngIf="!booksResponse.items?.length; else statusShowItems">
+                По Вашему запросу ничего не найдено
+            </span>
+        </ng-template>
+        <ng-template #statusShowItems>
+            <span>Найдено всего: {{booksResponse.totalItems}}</span>
+        </ng-template>
+    </div>
+</div>
 
-        <div *ngIf="booksResponse.totalItems > booksResponse.items.length">
+<div class="container" *ngIf="booksResponse?.items?.length">
 
-            <div *ngIf="getNextBooksPageLoading(); else getNextPageButton">
-                Подгрузка результатов...
-            </div>
+    <div class="container" *ngFor="let book of booksResponse.items; let i = index;">
+        <app-book-card
+            [index]="i" [book]="book"
+            [isFavourite]="!!favouritesMap[book.id]"
+            (toggleFavourites)="toggleFavourites(book)"></app-book-card>
+    </div>
 
-            <ng-template #getNextPageButton>
-                <button (click)="getNextPage()">Загрузить ещё результаты</button>
-            </ng-template>
-
+    <div class="container" *ngIf="booksResponse.totalItems > booksResponse.items.length">
+        <div class="notification has-text-centered" *ngIf="getNextBooksPageLoading(); else getNextPageButton">
+            <span class="is-medium">Загружаем результаты...</span>
         </div>
-    </ng-template>
-</ng-template>
+
+        <ng-template #getNextPageButton>
+            <button class="button is-link is-medium is-fullwidth" (click)="getNextPage()">Загрузить ещё результаты
+            </button>
+        </ng-template>
+    </div>
+</div>

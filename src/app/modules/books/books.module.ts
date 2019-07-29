@@ -7,6 +7,7 @@ import {StoreModule} from '@ngrx/store';
 import {EffectsModule} from '@ngrx/effects';
 import {BooksEffects} from './store/books.effects';
 import {BookCardModule} from '../book-card/book-card.module';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import {BookCardModule} from '../book-card/book-card.module';
             BooksEffects,
         ]),
         BookCardModule,
+        FontAwesomeModule,
     ]
 })
 export class BooksModule {
