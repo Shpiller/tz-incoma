@@ -1,17 +1,21 @@
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     Component,
+    ElementRef,
     EventEmitter,
     Input,
     OnChanges,
     OnDestroy,
     OnInit,
     Output,
-    SimpleChanges
+    SimpleChanges,
+    ViewChild
 } from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {Subscription} from 'rxjs';
+import {faTimes} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-books-search',
@@ -19,10 +23,15 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./books-search.component.scss'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BooksSearchComponent implements OnInit, OnChanges, OnDestroy {
+export class BooksSearchComponent implements OnInit, AfterViewInit, OnChanges, OnDestroy {
 
     @Input() query: string;
+    @Input() searchLoading: boolean;
     @Output() search: EventEmitter<string> = new EventEmitter();
+
+    @ViewChild('inputElement', {static: false}) inputElement: ElementRef;
+
+    faTimes = faTimes;
 
     maxlength: 500;
     searchForm: FormGroup;
@@ -38,6 +47,10 @@ export class BooksSearchComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit() {
         this.initForm();
+    }
+
+    ngAfterViewInit() {
+        this.inputElement.nativeElement.focus();
     }
 
     ngOnChanges(simpleChanges: SimpleChanges) {

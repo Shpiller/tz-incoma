@@ -1,21 +1,3 @@
-
-.g-column {
-    &__search-block {
-        max-width: 100%;
-        width: 100%;
-        position: relative;
-    }
-
-    &__btn {
-        position: absolute;
-        height: 24px;
-        top: 0;
-        bottom: 0;
-        margin-top: auto;
-        margin-bottom: auto;
-
-        &--close {
-            right: 10px;
-        }
-    }
+:focus {
+    box-shadow: none;
 }

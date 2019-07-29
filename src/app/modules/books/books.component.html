@@ -1,4 +1,8 @@
-<app-books-search [query]="query" (search)="searchBooks($event)"></app-books-search>
+<app-books-search
+    [query]="query"
+    [searchLoading]="getBooksLoading()"
+    (search)="searchBooks($event)">
+</app-books-search>
 
 <div *ngIf="getBooksLoading(); else showResults">Выполняется поиск...</div>
 

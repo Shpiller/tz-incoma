@@ -1,17 +1,19 @@
 <form [formGroup]="searchForm" novalidate>
-    <div class="g-column__search-block">
-        <input
-            #inputElement
-            type="text"
-            class="g-search"
-            formControlName="query"
-            placeholder="Поиск..."
-            [maxlength]="maxlength"
-        />
-<!--        <button class="g-column__btn g-column__btn&#45;&#45;close"-->
-<!--                [class.g-column__btn&#45;&#45;close-active]="inputElement.value"-->
-<!--                (click)="clearSearch()">X-->
-<!--        </button>-->
+    <div class="container">
+        <div class="field has-addons">
+            <p class="control is-expanded is-large" [class.is-loading]="searchLoading">
+                <input
+                    #inputElement
+                    class="input is-large is-expanded"
+                    type="text" placeholder="Начните поиск..."
+                    formControlName="query" [maxlength]="maxlength"/>
+            </p>
+            <p class="control">
+                <button class="button is-large" [disabled]="!inputElement.value" (click)="clearSearch()">
+                    Clear
+                </button>
+            </p>
+        </div>
     </div>
 
 </form>
