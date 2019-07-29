@@ -36,6 +36,7 @@
                     },
                     "configurations": {
                         "production": {
+                            "baseHref": "/incoma/",
                             "fileReplacements": [
                                 {
                                     "replace": "src/environments/environment.ts",
